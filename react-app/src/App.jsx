@@ -17,6 +17,7 @@ export default function App() {
 		};
 
 		window.addEventListener('cartUpdated', handleStorageChange);
+		return () => window.removeEventListener('cartUpdated', handleStorageChange);
 	}, []);
 
 	useEffect(() => {

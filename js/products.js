@@ -3,7 +3,6 @@ const productsContainer = document.getElementById('products');
 async function loadProducts() {
 	const result = await fetch('https://fakestoreapi.com/products');
 	const data = await result.json();
-	console.log(data);
 
 	data.forEach(item => {
 		const card = document.createElement('div');
@@ -12,7 +11,7 @@ async function loadProducts() {
 		card.innerHTML = `
 			<img src="${item.image}" alt="${item.title}"/>
 			<h4>${item.title}</h4>
-			<p>${item.price}</p>
+			<p>$${item.price}</p>
 			<button class="add-btn" data-id="${item.id}">Add to cart</button>
 		`;
 
@@ -33,4 +32,5 @@ function addToLocalCart(id) {
 	if (!exists) cart.push({ id });
 
 	localStorage.setItem('cart', JSON.stringify(cart));
+	window.dispatchEvent(new Event('cartUpdated'));
 }

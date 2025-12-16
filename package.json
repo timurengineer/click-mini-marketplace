@@ -1,0 +1,7 @@
+{
+	"name": "clic-mini-marketplace",
+	"version": "1.0.0",
+	"scripts": {
+		"build": "cd react-app && npm install && npm run build"
+	}
+}
