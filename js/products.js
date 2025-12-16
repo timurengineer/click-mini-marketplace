@@ -28,8 +28,12 @@ loadProducts();
 function addToLocalCart(id) {
 	let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-	const exists = cart.find(x => x.id === id);
-	if (!exists) cart.push({ id });
+	const existingItem = cart.find(x => x.id === id);
+	if (existingItem) {
+		existingItem.count = (existingItem.count || 1) + 1;
+	} else {
+		cart.push({ id, count: 1 });
+	}
 
 	localStorage.setItem('cart', JSON.stringify(cart));
 	window.dispatchEvent(new Event('cartUpdated'));

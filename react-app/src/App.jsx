@@ -31,14 +31,33 @@ export default function App() {
 	}
 
 	const detailed = cart
-		.map(c => products.find(p => p.id === c.id))
+		.map(c => {
+			const product = products.find(p => p.id === c.id);
+			return product ? { ...product, count: c.count || 1 } : null;
+		})
 		.filter(Boolean);
-	const total = detailed.reduce((s, p) => s + p.price, 0);
+	const total = detailed.reduce((s, p) => s + p.price * p.count, 0);
+
 	return (
-		<div>
-			<h2>Cart: ({detailed.length})</h2>
-			<CartList items={detailed} remove={removeItem} />
-			<h3>Total: ${total.toFixed(2)}</h3>
+		<div className='cart-container'>
+			<h2 className='cart-title'>Cart</h2>
+			{detailed.length > 0 && (
+				<p className='cart-count'>{detailed.length} items</p>
+			)}
+			{detailed.length === 0 ? (
+				<div className='cart-empty'>
+					<p className='empty-title'>Your cart is empty</p>
+					<p className='empty-subtitle'>Add products from the catalog</p>
+				</div>
+			) : (
+				<>
+					<CartList items={detailed} remove={removeItem} />
+					<div className='cart-total'>
+						<span className='total-label'>Total:</span>
+						<span className='total-amount'>${total.toFixed(2)}</span>
+					</div>
+				</>
+			)}
 		</div>
 	);
 }

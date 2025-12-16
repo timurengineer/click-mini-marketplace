@@ -1,12 +1,17 @@
 export default function CartItem({ item, remove }) {
 	return (
 		<div className='cart-item'>
-			<img src={item.image} />
-			<div>
+			<img src={item.image} alt={item.title} />
+			<div className='cart-item-info'>
 				<h4>{item.title}</h4>
-				<p>${item.price}</p>
+				<div className='cart-item-meta'>
+					<span className='price'>${item.price.toFixed(2)}</span>
+					<span className='qty'>Qty: {item.count}</span>
+				</div>
 			</div>
-			<button onClick={() => remove(item.id)}>Remove</button>
+			<button className='remove-btn' onClick={() => remove(item.id)}>
+				&times;
+			</button>
 		</div>
 	);
 }
